@@ -1,0 +1,439 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #38291f;
+    font-family: Arial, sans-serif;
+    color: #f5e8d0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px 15px;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 700px;
+
+    background-color: #183c30;
+    border: 2px solid #987344;
+    border-radius: 12px;
+
+    padding: 30px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Header */
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.subtitle {
+    color: #c6a66b;
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+}
+
+.header h1 {
+    font-size: 30px;
+    letter-spacing: 2px;
+    color: #f0d59b;
+}
+
+.description {
+    margin-top: 10px;
+    color: #c6c4ad;
+    font-size: 14px;
+}
+
+.player-panel {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: #244b3b;
+    border: 1px solid #54715a;
+    border-radius: 8px;
+
+    padding: 15px 20px;
+    margin-bottom: 25px;
+}
+
+.player-info,
+.attempt-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.attempt-info {
+    text-align: right;
+}
+
+.info-label {
+    color: #c6a66b;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.player-name,
+.attempt-count {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.machine-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-right: 30px;
+}
+
+.slot-machine {
+    flex: 1;
+    min-width: 0;
+
+    background-color: #704a30;
+    border: 5px solid #a77b48;
+    border-radius: 12px;
+
+    padding: 15px;
+
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.4);
+
+    position: relative;
+    z-index: 2;
+}
+
+.machine-top,
+.machine-bottom {
+    text-align: center;
+    color: #f4d28e;
+    font-weight: bold;
+    letter-spacing: 4px;
+    padding: 10px;
+}
+
+.machine-top {
+    font-size: 17px;
+}
+
+.machine-bottom {
+    font-size: 12px;
+}
+
+.reels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+
+    background-color: #172a23;
+    padding: 12px;
+
+    border-radius: 7px;
+    border: 3px solid #b38b54;
+}
+
+.reel-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.slot {
+    height: 105px;
+
+    background-color: #f2e9d8;
+    border: 2px solid #c5b18e;
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    position: relative;
+
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.12);
+
+    transition: background-color 0.2s;
+}
+
+.slot img {
+    width: 78%;
+    height: 78%;
+
+    object-fit: contain;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+.slot.spinning {
+    background-color: #e2d4bb;
+}
+
+.slot.spinning img {
+    animation: reelSpin 0.12s linear infinite;
+}
+
+@keyframes reelSpin {
+    0% {
+        transform: translateY(-35px);
+        filter: blur(2px);
+    }
+
+    50% {
+        transform: translateY(0);
+        filter: blur(1px);
+    }
+
+    100% {
+        transform: translateY(35px);
+        filter: blur(2px);
+    }
+}
+
+.slot.winner {
+    background-color: #f6d77c;
+    border: 3px solid #e7a82d;
+
+    animation: winnerEffect 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes winnerEffect {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.07);
+    }
+}
+
+.lever-area {
+    width: 65px;
+    height: 280px;
+
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lever-base {
+    position: absolute;
+    right: 0;
+
+    width: 25px;
+    height: 100px;
+
+    background: linear-gradient(
+        to right,
+        #754b29,
+        #c09252,
+        #754b29
+    );
+
+    border: 2px solid #51341f;
+    border-radius: 5px;
+}
+
+.lever {
+    position: absolute;
+
+    width: 55px;
+    height: 230px;
+
+    top: 25px;
+    right: -12px;
+
+    cursor: pointer;
+
+    transform-origin: center bottom;
+    transition: transform 0.3s ease;
+
+    z-index: 3;
+}
+
+.lever-stick {
+    position: absolute;
+
+    width: 12px;
+    height: 175px;
+
+    bottom: 15px;
+    left: 21px;
+
+    background: linear-gradient(
+        to right,
+        #777,
+        #e0e0e0,
+        #777
+    );
+
+    border: 1px solid #555;
+    border-radius: 6px;
+}
+
+.lever-ball {
+    position: absolute;
+
+    width: 43px;
+    height: 43px;
+
+    top: 0;
+    left: 5px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle at 30% 25%,
+        #ffaaaa,
+        #b52b24 60%,
+        #68140f
+    );
+
+    border: 2px solid #6c251b;
+
+    box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.4);
+}
+
+.lever:hover:not(.disabled) .lever-ball {
+    filter: brightness(1.15);
+}
+
+.lever.pulled {
+    transform: rotate(-25deg);
+}
+
+.lever.disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.game-controls {
+    text-align: center;
+    margin-top: 22px;
+}
+
+.lever-instruction {
+    color: #c6a66b;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.game-message {
+    min-height: 45px;
+
+    margin-top: 12px;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    color: #e9d7ad;
+}
+
+.rules {
+    background-color: #244b3b;
+
+    border-radius: 8px;
+    padding: 18px;
+
+    margin-top: 20px;
+
+    border-left: 3px solid #b78a4c;
+}
+
+.rules h2 {
+    color: #e5c58d;
+    font-size: 15px;
+
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+}
+
+.rules p {
+    color: #d4d9cd;
+    font-size: 13px;
+
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+
+    color: #9b9e89;
+    font-size: 11px;
+    letter-spacing: 2px;
+
+    margin-top: 25px;
+}
+
+@media (max-width: 500px) {
+
+    body {
+        padding: 15px 10px;
+    }
+
+    .game-container {
+        padding: 18px 12px;
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .machine-wrapper {
+        padding-right: 18px;
+    }
+
+    .slot-machine {
+        padding: 8px;
+    }
+
+    .reels {
+        gap: 6px;
+        padding: 7px;
+    }
+
+    .slot {
+        height: 80px;
+    }
+
+    .lever-area {
+        width: 42px;
+        height: 230px;
+    }
+
+    .lever {
+        transform: scale(0.8);
+        transform-origin: center bottom;
+        right: -15px;
+    }
+
+    .lever.pulled {
+        transform: scale(0.8) rotate(-25deg);
+    }
+
+    .player-panel {
+        padding: 12px;
+    }
+
+    .rules {
+        padding: 14px;
+    }
+}
